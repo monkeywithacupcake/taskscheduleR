@@ -6,10 +6,9 @@ Description: Schedule R scripts/processes with the Windows task scheduler. This
 Authors@R: c(person("Jan", "Wijffels", role = c("aut", "cre", "cph"), email = "jwijffels@bnosac.be"), person("BNOSAC", role = "cph"), person("Oliver", "Belmans", role = c("cph", "aut")))
 Maintainer: Jan Wijffels <jwijffels@bnosac.be>
 License: AGPL-3
-Version: 1.4
+Version: 1.5
 URL: https://github.com/bnosac/taskscheduleR
 OS_type: windows
-Date: 2018-10-24
 Imports:
     data.table,
     tools,
@@ -17,7 +16,8 @@ Imports:
 VignetteBuilder: knitr
 Suggests:
   knitr,
+  rmarkdown,
   miniUI,
   shiny,
   testthat
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1

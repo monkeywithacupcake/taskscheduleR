@@ -1,6 +1,9 @@
 Package: taskscheduleR
 ================
 
+Version: 1.5 [2021-04-16]
+- Add rmarkdown to Suggests in DESCRIPTION
+
 Version: 1.4 [2018-10-24]
 - Rename taskcheduler_stop to taskscheduler_stop and taskcheduler_runnow to taskscheduler_runnow
 

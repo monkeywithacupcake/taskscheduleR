@@ -4,14 +4,23 @@
 \alias{taskscheduler_create}
 \title{Schedule an R script with the Windows task scheduler.}
 \usage{
-taskscheduler_create(taskname = basename(rscript), rscript,
-  schedule = c("ONCE", "MONTHLY", "WEEKLY", "DAILY", "HOURLY", "MINUTE",
-  "ONLOGON", "ONIDLE"), starttime = format(Sys.time() + 62, "\%H:\%M"),
-  startdate = format(Sys.Date(), "\%d/\%m/\%Y"), days = c("*", "MON", "TUE",
-  "WED", "THU", "FRI", "SAT", "SUN", 1:31), months = c("*", "JAN", "FEB",
-  "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"),
-  modifier, idletime = 60L, Rexe = file.path(Sys.getenv("R_HOME"), "bin",
-  "Rscript.exe"), rscript_args = "", schtasks_extra = "", debug = FALSE)
+taskscheduler_create(
+  taskname = basename(rscript),
+  rscript,
+  schedule = c("ONCE", "MONTHLY", "WEEKLY", "DAILY", "HOURLY", "MINUTE", "ONLOGON",
+    "ONIDLE"),
+  starttime = format(Sys.time() + 62, "\%H:\%M"),
+  startdate = format(Sys.Date(), "\%d/\%m/\%Y"),
+  days = c("*", "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN", 1:31),
+  months = c("*", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT",
+    "NOV", "DEC"),
+  modifier,
+  idletime = 60L,
+  Rexe = file.path(Sys.getenv("R_HOME"), "bin", "Rscript.exe"),
+  rscript_args = "",
+  schtasks_extra = "",
+  debug = FALSE
+)
 }
 \arguments{
 \item{taskname}{a character string with the name of the task. Defaults to the filename. Should not contain any spaces.}
@@ -57,7 +66,7 @@ as the location of the rscript
 }
 \examples{
 myscript <- system.file("extdata", "helloworld.R", package = "taskscheduleR")
-cat(readLines(myscript), sep = "\\n")
+cat(readLines(myscript), sep = "\n")
 
 \dontrun{
 ## Run script once at a specific timepoint (within 62 seconds)
@@ -97,6 +106,6 @@ taskscheduler_delete(taskname = "myfancyscript_withargs_b")
 
 ## Have a look at the log
 mylog <- system.file("extdata", "helloworld.log", package = "taskscheduleR")
-cat(readLines(mylog), sep = "\\n")
+cat(readLines(mylog), sep = "\n")
 }
 }
