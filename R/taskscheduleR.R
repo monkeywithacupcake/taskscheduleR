@@ -160,8 +160,14 @@ taskscheduler_create <- function(taskname = basename(rscript),
   if(!schedule %in% c('ONLOGON', 'ONIDLE')){
     cmd <- sprintf("%s /ST %s", cmd, starttime)
   }
-  if(!schedule %in% c('ONCE', 'ONLOGON', 'ONIDLE')){
-    cmd <- sprintf("%s /SD %s", cmd, shQuote(startdate))
+  if(!schedule %in% c('ONLOGON', 'ONIDLE')){
+    if(schedule %in% "ONCE" && missing(startdate)){
+      ## run once now 
+      cmd <- cmd
+    }else{
+      cmd <- sprintf("%s /SD %s", cmd, shQuote(startdate))  
+    }
+    
   }
   if(schedule %in% c('WEEKLY', 'MONTHLY')){
     cmd <- sprintf("%s /D %s", cmd, days)
