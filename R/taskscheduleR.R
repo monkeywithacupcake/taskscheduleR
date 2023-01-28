@@ -55,6 +55,7 @@ taskscheduler_ls <- function(encoding = 'UTF-8', ...){
 #' running a scheduled ONIDLE task. The valid range is 1 - 999 minutes.
 #' @param Rexe path to Rscript.exe which will be used to run the script. Defaults to Rscript at the bin folder of R_HOME.
 #' @param rscript_args character string with further arguments passed on to Rscript. See args in \code{\link{Rscript}}.
+#' @param rscript_options character string with further options passed on to Rscript. See options in \code{\link{Rscript}}.
 #' @param schtasks_extra character string with further schtasks arguments. See the inst/docs/schtasks.pdf 
 #' @param debug logical to print the system call to screen
 #' @return the system call to schtasks /Create 
@@ -114,6 +115,7 @@ taskscheduler_create <- function(taskname = basename(rscript),
                                  idletime = 60L,
                                  Rexe = file.path(Sys.getenv("R_HOME"), "bin", "Rscript.exe"),
                                  rscript_args = "",
+                                 rscript_options = "",
                                  schtasks_extra = "",
                                  debug = FALSE){
   if(!file.exists(rscript)){
@@ -143,7 +145,7 @@ taskscheduler_create <- function(taskname = basename(rscript),
   if(length(grep(" ", rscript)) > 0){
     message(sprintf("Full path to filename '%s' contains spaces, it is advised to put your script in another location which contains no spaces", rscript))
   }
-  task <- sprintf("cmd /c %s %s %s >> %s 2>&1", Rexe, shQuote(rscript), paste(rscript_args, collapse = " "), shQuote(sprintf("%s.log", tools::file_path_sans_ext(rscript))))
+  task <- sprintf("cmd /c %s %s %s %s >> %s 2>&1", Rexe, paste(rscript_options, collapse = " "), shQuote(rscript), paste(rscript_args, collapse = " "), shQuote(sprintf("%s.log", tools::file_path_sans_ext(rscript))))
   if(nchar(task) > 260){
     warning(sprintf("Passing on this to the TR argument of schtasks.exe: %s, this is too long. Consider putting your scripts into another folder", task))
   }
