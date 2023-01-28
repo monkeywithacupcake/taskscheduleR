@@ -55,6 +55,7 @@ taskscheduler_ls <- function(encoding = 'UTF-8', ...){
 #' running a scheduled ONIDLE task. The valid range is 1 - 999 minutes.
 #' @param Rexe path to Rscript.exe which will be used to run the script. Defaults to Rscript at the bin folder of R_HOME.
 #' @param rscript_args character string with further arguments passed on to Rscript. See args in \code{\link{Rscript}}.
+#' @param rscript_options character string with further options passed on to Rscript. See options in \code{\link{Rscript}}.
 #' @param schtasks_extra character string with further schtasks arguments. See the inst/docs/schtasks.pdf 
 #' @param debug logical to print the system call to screen
 #' @return the system call to schtasks /Create 
