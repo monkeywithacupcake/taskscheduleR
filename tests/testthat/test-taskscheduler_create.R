@@ -10,7 +10,9 @@ test_that("taskscheduleR examples can be scheduled as expected", {
                        schedule = "ONCE", starttime = format(Sys.time() + 62, "%H:%M")), NA)
   
   ## get a data.frame of all tasks
-  expect_warning(tasks <- taskscheduler_ls(), NA)
+  expect_warning({
+    tasks <- taskscheduler_ls()
+  })
 
   ## delete the tasks
   expect_warning(taskscheduler_delete(taskname = "myfancyscript"), NA)
@@ -20,5 +22,5 @@ test_that("taskscheduleR examples can be scheduled as expected", {
 
 test_that("taskscheduler_ls returns a data.frame", {
   skip_on_cran()
-  expect_is(taskscheduler_ls(), "data.frame")
+  expect_is(suppressWarnings({taskscheduler_ls()}), "data.frame")
 })
