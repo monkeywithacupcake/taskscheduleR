@@ -1,6 +1,9 @@
 Package: taskscheduleR
 ================
 
+Version: 1.7 [2023-01-28]
+- taskscheduler_create gains an extra argument rscript_options (issue #97)
+
 Version: 1.6 [2022-03-10]
 - Use startdate in case of schedule = 'ONCE' in order to allow scheduling a script to run once in the future (issue #88)
 
