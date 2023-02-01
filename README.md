@@ -107,7 +107,10 @@ If you are using RStudio, you might need to start RStudio as admin, on Windows t
 Mark on error messages
 -----------
 
-- You can only have one task with the same name, make sure you use taskscheduler_delete the task if you are planning to create a new task with the same name.
+- You can only have one task with the same name, make sure you use `taskscheduler_delete` the task if you are planning to create a new task with the same name.
 - Tasks are only run if your computer is on and your cable is plugged in
+- `taskscheduler_create` requires you to give the full path to the R script you want to schedule. 
+    - R has many facilities to provide the full path to a file on disk
+    - Some examples include `file.path(getwd(), "subfolder", "yourscript.R")`, `path.expand("~/subfolder/yourscript.R")`, using `fs::path_abs("subfolder/yourscript.R")`, `normalizePath("subfolder/yourscript.R")`,  `file.path(Sys.getenv("YOUR_PROJECT_DIR"), "subfolder", "yourscript.R")`. Choose what suites you best to pass the full path on to argument `rscript` of `taskscheduler_create`
 - Consider using the `startdate` argument of `taskscheduler_create` (scheduling something at 9/2/2018 means something different than 2/9/2018 depending on your locale)
 
