@@ -158,7 +158,7 @@ taskscheduler_create <- function(taskname = basename(rscript),
     
   } else {
     
-    task <- sprintf("cmd /c %s %s %s %s %s >> %s 2>&1", paste0("cd ",exec_path, " & "), Rexe, 
+    task <- sprintf("cmd /c %s %s %s %s %s >> %s 2>&1", paste("cd",exec_path, "&", collapse = " "), Rexe, 
                     paste(rscript_options, collapse = " "), shQuote(rscript), 
                     paste(rscript_args, collapse = " "), shQuote(sprintf("%s.log", 
                                                                          tools::file_path_sans_ext(rscript))))
