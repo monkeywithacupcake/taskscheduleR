@@ -58,6 +58,7 @@ taskscheduler_ls <- function(encoding = 'UTF-8', ...){
 #' @param rscript_options character string with further options passed on to Rscript. See options in \code{\link{Rscript}}.
 #' @param schtasks_extra character string with further schtasks arguments. See the inst/docs/schtasks.pdf 
 #' @param debug logical to print the system call to screen
+#' @param exec_path character string of the path where cmd should be executed. Defaults to system path. 
 #' @return the system call to schtasks /Create 
 #' @export
 #' @examples 
@@ -117,7 +118,8 @@ taskscheduler_create <- function(taskname = basename(rscript),
                                  rscript_args = "",
                                  rscript_options = "",
                                  schtasks_extra = "",
-                                 debug = FALSE){
+                                 debug = FALSE, 
+                                 exec_path = ""){
   if(!file.exists(rscript)){
     stop(sprintf("File %s does not exist", rscript))
   }
@@ -145,8 +147,25 @@ taskscheduler_create <- function(taskname = basename(rscript),
   if(length(grep(" ", rscript)) > 0){
     message(sprintf("Full path to filename '%s' contains spaces, it is advised to put your script in another location which contains no spaces", rscript))
   }
-  task <- sprintf("cmd /c %s %s %s %s >> %s 2>&1", Rexe, paste(rscript_options, collapse = " "), shQuote(rscript), paste(rscript_args, collapse = " "), shQuote(sprintf("%s.log", tools::file_path_sans_ext(rscript))))
-  if(nchar(task) > 260){
+  
+  
+  if (exec_path == "") {
+    task <- sprintf("cmd /c %s %s %s %s >> %s 2>&1", Rexe, 
+                    paste(rscript_options, collapse = " "), shQuote(rscript), 
+                    paste(rscript_args, collapse = " "), shQuote(sprintf("%s.log", 
+                                                                         tools::file_path_sans_ext(rscript))))
+    
+    
+  } else {
+    
+    task <- sprintf("cmd /c %s %s %s %s %s >> %s 2>&1", paste("cd",exec_path, "&", collapse = " "), Rexe, 
+                    paste(rscript_options, collapse = " "), shQuote(rscript), 
+                    paste(rscript_args, collapse = " "), shQuote(sprintf("%s.log", 
+                                                                         tools::file_path_sans_ext(rscript))))
+    
+  }
+
+    if(nchar(task) > 260){
     warning(sprintf("Passing on this to the TR argument of schtasks.exe: %s, this is too long. Consider putting your scripts into another folder", task))
   }
   cmd <- sprintf('schtasks /Create /TN %s /TR %s /SC %s', 

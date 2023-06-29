@@ -20,7 +20,8 @@ taskscheduler_create(
   rscript_args = "",
   rscript_options = "",
   schtasks_extra = "",
-  debug = FALSE
+  debug = FALSE,
+  exec_path = ""
 )
 }
 \arguments{
@@ -57,6 +58,8 @@ running a scheduled ONIDLE task. The valid range is 1 - 999 minutes.}
 \item{schtasks_extra}{character string with further schtasks arguments. See the inst/docs/schtasks.pdf}
 
 \item{debug}{logical to print the system call to screen}
+
+\item{exec_path}{character string of the path where cmd should be executed. Defaults to system path.}
 }
 \value{
 the system call to schtasks /Create
