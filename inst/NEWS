@@ -1,6 +1,9 @@
 Package: taskscheduleR
 ================
 
+Version: 1.8 [2023-07-02]
+- taskscheduler_create gains an extra argument exec_path (issue #101) which allows to change the directory where the script will be executed
+
 Version: 1.7 [2023-01-28]
 - taskscheduler_create gains an extra argument rscript_options (issue #97)
 
