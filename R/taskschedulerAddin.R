@@ -199,7 +199,7 @@ taskschedulerAddin <- function(RscriptRepository,
     ###########################
     shiny::observeEvent(input$Stop, {
       shiny::updateSelectInput(session, inputId="getFiles", choices = list.files(RscriptRepository, pattern = ".R$|.r$"))
-      taskcheduler_stop(taskname = input$getFiles)
+      taskscheduler_stop(taskname = input$getFiles)
     })
     
     ###########################
