@@ -37,6 +37,7 @@ taskscheduler_ls <- function(encoding = 'UTF-8', ...){
 #' More information about the scheduling format can be found in the docs/schtasks.pdf file inside this package.
 #' The rscript file will be scheduled with Rscript.exe and the log of the run will be put in the .log file which can be found in the same directory
 #' as the location of the rscript
+#' Be mindful of your rscript path length and any additional rscriptargs or options. The total length of the Windows TR must be less than 260 characters, and about 80 characters are already used to point to the RScript.exe. Your log file path will be about the same length as your rscript. 260 - 80, leaves about 180 characters total, so approximately 90 characters max for rscript path with no rscriptargs or options. These numbers are given as example only as each system is a little different.
 #' 
 #' @param taskname a character string with the name of the task. Defaults to the filename. Should not contain any spaces.
 #' @param rscript the full path to the .R script with the R code to execute. Should not contain any spaces.
@@ -57,7 +58,7 @@ taskscheduler_ls <- function(encoding = 'UTF-8', ...){
 #' @param rscript_args character string with further arguments passed on to Rscript. See args in \code{\link{Rscript}}.
 #' @param rscript_options character string with further options passed on to Rscript. See options in \code{\link{Rscript}}.
 #' @param schtasks_extra character string with further schtasks arguments. See the inst/docs/schtasks.pdf 
-#' @param debug logical to print the system call to screen
+#' @param debug logical to print the system call to screen. if TRUE, schedule is not actually passed. Defaults to FALSE.
 #' @param exec_path character string of the path where cmd should be executed. Defaults to system path. 
 #' @return the system call to schtasks /Create 
 #' @export
@@ -165,7 +166,7 @@ taskscheduler_create <- function(taskname = basename(rscript),
     
   }
 
-    if(nchar(task) > 260){
+    if(nchar(task) > 260){ 
     warning(sprintf("Passing on this to the TR argument of schtasks.exe: %s, this is too long. Consider putting your scripts into another folder", task))
   }
   cmd <- sprintf('schtasks /Create /TN %s /TR %s /SC %s', 
@@ -197,8 +198,8 @@ taskscheduler_create <- function(taskname = basename(rscript),
     cmd <- sprintf("%s /M %s", cmd, months)
   }
   cmd <- sprintf("%s %s", cmd, schtasks_extra)
-  if(debug){
-    message(sprintf("Creating task schedule: %s", cmd))  
+  if(debug){ # if debug, do not actually run
+    return(message(sprintf("Creating task schedule: %s", cmd)))  
   }
   system(cmd, intern = TRUE)
 }
