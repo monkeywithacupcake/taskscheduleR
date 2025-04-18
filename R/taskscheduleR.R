@@ -168,6 +168,7 @@ taskscheduler_create <- function(taskname = basename(rscript),
 
     if(nchar(task) > 260){ 
     warning(sprintf("Passing on this to the TR argument of schtasks.exe: %s, this is too long. Consider putting your scripts into another folder", task))
+      stopifnot("Will Fail, try a shorter path", nchar(task) <= 260)
   }
   cmd <- sprintf('schtasks /Create /TN %s /TR %s /SC %s', 
                  shQuote(taskname, type = "cmd"), 

@@ -57,7 +57,7 @@ running a scheduled ONIDLE task. The valid range is 1 - 999 minutes.}
 
 \item{schtasks_extra}{character string with further schtasks arguments. See the inst/docs/schtasks.pdf}
 
-\item{debug}{logical to print the system call to screen}
+\item{debug}{logical to print the system call to screen. if TRUE, schedule is not actually passed. Defaults to FALSE.}
 
 \item{exec_path}{character string of the path where cmd should be executed. Defaults to system path.}
 }
@@ -69,6 +69,7 @@ Schedule an R script with the Windows task scheduler. E.g. daily, weekly, once, 
 More information about the scheduling format can be found in the docs/schtasks.pdf file inside this package.
 The rscript file will be scheduled with Rscript.exe and the log of the run will be put in the .log file which can be found in the same directory
 as the location of the rscript
+Be mindful of your rscript path length and any additional rscriptargs or options. The total length of the Windows TR must be less than 260 characters, and about 80 characters are already used to point to the RScript.exe. Your log file path will be about the same length as your rscript. 260 - 80, leaves about 180 characters total, so approximately 90 characters max for rscript path with no rscriptargs or options. These numbers are given as example only as each system is a little different.
 }
 \examples{
 myscript <- system.file("extdata", "helloworld.R", package = "taskscheduleR")
